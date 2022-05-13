@@ -1,0 +1,6 @@
+# https://www.youtube.com/watch?v=uaeKhfhYE0U&t=278s
+git branch --> lists all existing branches
+git init --> should be 1st command ever
+git rm anyfile.py ---> removes tracking. opposite of git add
+git config user.name 'aditya patel' --> do this after git init - a must
+git config user.email 'adityahp@umich.edu' --> do this after git init - a must
