@@ -1,4 +1,7 @@
 # https://www.youtube.com/playlist?list=PLS1QulWo1RIb9WVQGJ_vh-RQusbZgO_As
+import os
+os.system("any linux CLI command that u normally would write")
+
 echo aditya is a good guy >> linuxcommandsused.txt ---> writes/appends line to txt file
 cat anyfile.txt ---> shows all contents of text file
 head -10 anyfile.txt ---> shows top 10 lines of any text file
@@ -7,3 +10,7 @@ tail -10 anyfile.txt >> obama.txt ---> appends/writes the output of tail command
 touch obama.txt ----> creates a new file called obama.txt
 mkdir
 cut
+cp -------------> copy
+rm    -----------> remove
+
+ls - l ----------> long format - lists date, time, size, etc
