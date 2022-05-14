@@ -14,3 +14,4 @@ cp -------------> copy
 rm    -----------> remove
 
 ls - l ----------> long format - lists date, time, size, etc
+git log | head -10  (Show only recent most 10 lines of commits)
