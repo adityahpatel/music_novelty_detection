@@ -5,7 +5,7 @@ import numpy as np
 
 def feature_engineering(file_path: str) -> list:
     """
-    This function extracts hand crafted features related to beats, pitch/keys and instruments used.
+    This function extracts handcrafted features related to beats, pitch/keys and instruments used.
 
     Input       : Takes as input the path of the MIDI file
     Input_type  : String
@@ -116,6 +116,7 @@ if __name__ == '__main__':
     import pickle
     import warnings
     import sys
+    import os
 
     warnings.filterwarnings('ignore')
     parser = argparse.ArgumentParser()
@@ -126,15 +127,18 @@ if __name__ == '__main__':
     try:
         assert args.input[-4:] == '.mid'
     except AssertionError:
-        print('Invalid file path entered. Must end in .pkl \nStopping execution . . .')
+        print('Invalid file path entered. Valid path must end in .mid \nStopping execution . . .')
         sys.exit()                                            # without sys.exit(), it will continue further execution
 
     try:
         assert args.output[-4:] == '.pkl'
     except AssertionError:
-        print("Invalid output file name. Must end in .pkl. \nStopping execution . . .")
+        print("Invalid output file name. Valid name must end in .pkl. \nStopping execution . . .")
         sys.exit()
 
     L = feature_engineering(args.input)
     pickle.dump(L, file=open(args.output, "wb+"))
-    print('Code Successfully executed!')
+    print('Code Successfully executed!!')
+    for i in os.system("ls training_data"):
+        print(i)
+

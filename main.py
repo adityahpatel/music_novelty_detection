@@ -1,11 +1,8 @@
-import tensorflow as tf, keras, pretty_midi, os
-import csv, pretty_midi,re
+import pretty_midi, os
+import csv, pretty_midi, re
 import pandas as pd, numpy as np, matplotlib.pyplot as plt
 from sklearn.utils import shuffle
-from keras.metrics import Precision, Accuracy, AUC, Recall
-import warnings
-warnings.filterwarnings('ignore')
-pd.set_option("display.max_columns", None)
+
 from sklearn.svm import OneClassSVM
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
@@ -108,8 +105,8 @@ def feature_engineering(file_path: str) -> list:
 
         row_features = [tempo, number_beats, number_notes, number_downbeats, percentage_downbeats, length,
                         number_notes_solo, number_instruments, notes_density, percentage_notes_solo,
-                        tempo_change_frequency, resolution, first_highest_used_key, second_highest_used_key,
-                        note_duration, note_velocity, note_pitch, percentage_pitch_classes]
+                        tempo_change_frequency, resolution, note_duration, note_velocity, note_pitch,
+                        percentage_pitch_classes]
 
         feature_bank = []
         for feature in row_features:
@@ -137,7 +134,7 @@ def data_preparation(mode: str, path: str) -> np.ndarray:
     """
     feature_names = ['tempo', 'number_beats', 'number_notes', 'number_downbeats', 'percentage_downbeats', 'length',
                      'number_notes_solo', 'number_instruments', 'notes_density', 'percentage_notes_solo',
-                     'tempo_change_frequency', 'resolution', 'first_highest_used_key', 'second_highest_used_key',
+                     'tempo_change_frequency', 'resolution',
                      'note_duration_mean', 'note_duration_std_dev', 'note_duration_min', 'note_duration_25p',
                      'note_duration_50p', 'note_duration_75p', 'note_duration_max',
                      'note_velocity_mean', 'note_velocity_std_dev', 'note_velocity_min', 'note_velocity_25p',
@@ -167,44 +164,45 @@ def data_preparation(mode: str, path: str) -> np.ndarray:
             file_path = path + file_name
             df.loc[len(df)] = feature_engineering(file_path)
 
-    df = df.drop(columns=['first_highest_used_key', 'second_highest_used_key'])
     df = df.dropna()
-    # df_array = MinMaxScaler().fit_transform(df)
-
     df_array = df.to_numpy()
     return df_array
+
 
 X_train = data_preparation('train', 'MusicNet/PS1/')
 X_test = data_preparation('test', 'MusicNet/PS2/')
 
-def visualize(A:np.array):
-    feature_names = ['tempo', 'number_beats', 'number_notes', 'number_downbeats', 'percentage_downbeats','length',
-                         'number_notes_solo', 'number_instruments', 'notes_density', 'percentage_notes_solo',
-                        'tempo_change_freq','resolution',
-                        'note_dur_mean', 'note_dur_std_dev', 'note_dur_min', 'note_dur_25p',
-                         'note_dur_50p', 'note_dur_75p', 'note_duration_max',
-                         'note_vel_mean', 'note_vel_std_dev', 'note_vel_min', 'note_vel_25p',
-                         'note_vel_50p', 'note_vel_75p', 'note_vel_max',
-                         'note_pitch_mean', 'note_pitch_std_dev', 'note_pitch_min', 'note_pitch_25p', 'note_pitch_50p',
-                         'note_pitch_75p', 'note_pitch_max', 'pitch_class1', 'pitch_class2',
-                        'pitch_class3', 'pitch_class4', 'percentage_pitch_class5',
-                         'pitch_class6', 'pitch_class7', 'pitch_class8',
-                        'pitch_class9', 'pitch_class10', 'pitch_class11',
-                        'pitch_class12']
 
-    df = pd.DataFrame(X_train, columns = feature_names)
+def visualize(A: np.array):
+    feature_names = ['tempo', 'number_beats', 'number_notes', 'number_downbeats', 'percentage_downbeats', 'length',
+                     'number_notes_solo', 'number_instruments', 'notes_density', 'percentage_notes_solo',
+                     'tempo_change_freq', 'resolution',
+                     'note_dur_mean', 'note_dur_std_dev', 'note_dur_min', 'note_dur_25p',
+                     'note_dur_50p', 'note_dur_75p', 'note_duration_max',
+                     'note_vel_mean', 'note_vel_std_dev', 'note_vel_min', 'note_vel_25p',
+                     'note_vel_50p', 'note_vel_75p', 'note_vel_max',
+                     'note_pitch_mean', 'note_pitch_std_dev', 'note_pitch_min', 'note_pitch_25p', 'note_pitch_50p',
+                     'note_pitch_75p', 'note_pitch_max', 'pitch_class1', 'pitch_class2',
+                     'pitch_class3', 'pitch_class4', 'percentage_pitch_class5',
+                     'pitch_class6', 'pitch_class7', 'pitch_class8',
+                     'pitch_class9', 'pitch_class10', 'pitch_class11',
+                     'pitch_class12']
+
+    df = pd.DataFrame(X_train, columns=feature_names)
     plt.figure(figsize=(15, 18))
-    for i in range(1,46):
-        ax = plt.subplot(9,5,i)
-        ax.hist(df[feature_names[i-1]])
-        ax.set_title(feature_names[i-1])
+    for i in range(1, 46):
+        ax = plt.subplot(9, 5, i)
+        ax.hist(df[feature_names[i - 1]])
+        ax.set_title(feature_names[i - 1])
     plt.subplots_adjust(left=0.1,
-                    bottom=0.1,
-                    right=0.9,
-                    top=0.9,
-                    wspace=0.4,
-                    hspace=0.4)
+                        bottom=0.1,
+                        right=0.9,
+                        top=0.9,
+                        wspace=0.4,
+                        hspace=0.4)
     return None
+
+
 visualize(X_train)
 
 
