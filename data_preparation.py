@@ -1,7 +1,8 @@
 import os
+print(os.system("pwd"))
+os.system(cd training_data)
+print(os.system("pwd"))
 
-os.system("mv /Users/namita/Desktop/SFL_ProductionGrade/training_data/*/**\
-          /Users/namita/Desktop/SFL_ProductionGrade/training_data")
-os.system("rmdir /Users/namita/Desktop/SFL_ProductionGrade/training_data/*")
-
+# for folder in os.listdir(path)[:1]:
+#     os.system("cd $folder"))
 
