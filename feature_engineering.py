@@ -2,7 +2,6 @@ import pretty_midi
 import pandas as pd
 import numpy as np
 
-
 def feature_engineering(file_path: str) -> list:
     """
     This function extracts handcrafted features related to beats, pitch/keys and instruments used.
@@ -139,6 +138,5 @@ if __name__ == '__main__':
     L = feature_engineering(args.input)
     pickle.dump(L, file=open(args.output, "wb+"))
     print('Code Successfully executed!!')
-    for i in os.system("ls training_data"):
-        print(i)
+
 
