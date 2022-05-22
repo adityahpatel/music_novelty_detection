@@ -213,7 +213,6 @@ def inference():
 
     Return: None
     """
-
     model_LOF = LocalOutlierFactor(n_neighbors=5, novelty=True, metric='cosine').fit(X_train)
     model_Isolation_Forest = IsolationForest(random_state=0).fit(
         X_train)  # I assume contamination='auto' as I have no insight

@@ -1,6 +1,11 @@
 import pretty_midi
 import pandas as pd
 import numpy as np
+import argparse
+import pickle
+import warnings
+import sys
+import os
 
 def feature_engineering(file_path: str) -> list:
     """
@@ -110,14 +115,12 @@ def feature_engineering(file_path: str) -> list:
     except Exception as e:
         print(f"ATTENTION: {e} error has occurred")
 
-def data_preparation(mode: str, path: str) -> np.ndarray,np.ndarray:
+def data_preparation(mode: str, path: str) -> (np.ndarray, np.ndarray):
     """
     Converts all MIDI files into a single dataframe with features
 
     Input 1     : Enter path containing training or testing MIDI files
     Input_type  : String
-
-
     Output      : Numpy array with columns as features and rows corresp to a MIDI file
     Output_type : Numpy Array
     """
@@ -140,15 +143,7 @@ def data_preparation(mode: str, path: str) -> np.ndarray,np.ndarray:
         file_path = 'training_data' + '/' + file_name
         df.loc[len(df)] = feature_engineering(file_path)
 
-
-
 if __name__ == '__main__':
-    import argparse
-    import pickle
-    import warnings
-    import sys
-    import os
-
     warnings.filterwarnings('ignore')
     parser = argparse.ArgumentParser()
     parser.add_argument('input', help='Enter file path of a single MIDI file (e.g. abc/cd.mid)')
@@ -159,7 +154,7 @@ if __name__ == '__main__':
         assert args.input[-4:] == '.mid'
     except AssertionError:
         print('Invalid file path entered. Valid path must end in .mid \nStopping execution . . .')
-        sys.exit()                                            # without sys.exit(), it will continue further execution
+        sys.exit()  # without sys.exit(), it will continue further execution
 
     try:
         assert args.output[-4:] == '.pkl'
