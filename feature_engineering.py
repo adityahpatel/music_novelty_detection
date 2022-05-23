@@ -16,7 +16,6 @@ def feature_engineering(file_path: str) -> list:
 
     Output      : Outputs a bank of handcrafted features extracted from the MIDI file
     Output_type : List
-    :rtype: object
     """
 
     try:
@@ -115,14 +114,10 @@ def feature_engineering(file_path: str) -> list:
     except Exception as e:
         print(f"ATTENTION: {e} error has occurred")
 
-def data_preparation(mode: str, path: str) -> (np.ndarray, np.ndarray):
+def training_data_prep() -> np.ndarray:
     """
-    Converts all MIDI files into a single dataframe with features
-
-    Input 1     : Enter path containing training or testing MIDI files
-    Input_type  : String
-    Output      : Numpy array with columns as features and rows corresp to a MIDI file
-    Output_type : Numpy Array
+    Each MIDI file is converted into its features.
+    A numpy array is returned which contains a subarray corresp to each training MIDI file
     """
     feature_names = ['tempo', 'number_beats', 'number_notes', 'number_downbeats', 'percentage_downbeats', 'length',
                      'number_notes_solo', 'number_instruments', 'notes_density', 'percentage_notes_solo',
@@ -138,32 +133,35 @@ def data_preparation(mode: str, path: str) -> (np.ndarray, np.ndarray):
                      'percentage_pitch_class9', 'percentage_pitch_class10', 'percentage_pitch_class11',
                      'percentage_pitch_class12']
 
-    df = pd.DataFrame(columns=feature_names)
-    for file_name in os.listdir("training_data"):
-        file_path = 'training_data' + '/' + file_name
-        df.loc[len(df)] = feature_engineering(file_path)
+    df_train = pd.DataFrame(columns=feature_names)
+    for file_name in os.listdir("Training_data"):
+        file_path = 'Training_data' + '/' + file_name
+        df_train.loc[len(df_train)] = feature_engineering(file_path)
+    df_train = df_train.dropna()
+    array_train = df_train.to_numpy()
+    return array_train
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
-    parser = argparse.ArgumentParser()
-    parser.add_argument('input', help='Enter file path of a single MIDI file (e.g. abc/cd.mid)')
-    parser.add_argument('output', help='Enter name to store output (e.g. output.pkl)')
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('input', help='Enter file path of a single MIDI file (e.g. abc/cd.mid)')
+    # parser.add_argument('output', help='Enter name to store output (e.g. output.pkl)')
+    # args = parser.parse_args()
+    #
+    # try:
+    #     assert args.input[-4:] == '.mid'
+    # except AssertionError:
+    #     print('Invalid file path entered. Valid path must end in .mid \nStopping execution . . .')
+    #     sys.exit()  # without sys.exit(), it will continue further execution
+    #
+    # try:
+    #     assert args.output[-4:] == '.pkl'
+    # except AssertionError:
+    #     print("Invalid output file name. Valid name must end in .pkl. \nStopping execution . . .")
+    #     sys.exit()
+    os.system("rm -rf training_data.txt")
+    np.savetxt('training_data.txt', training_data_prep())
+    print('Training data features are successfully saved in training_data.txt')
 
-    try:
-        assert args.input[-4:] == '.mid'
-    except AssertionError:
-        print('Invalid file path entered. Valid path must end in .mid \nStopping execution . . .')
-        sys.exit()  # without sys.exit(), it will continue further execution
-
-    try:
-        assert args.output[-4:] == '.pkl'
-    except AssertionError:
-        print("Invalid output file name. Valid name must end in .pkl. \nStopping execution . . .")
-        sys.exit()
-
-    L = feature_engineering(args.input)
-    pickle.dump(L, file=open(args.output, "wb+"))
-    print('Code Successfully executed!!')
 
 
