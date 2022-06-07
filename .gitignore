@@ -1,2 +1,4 @@
 *.mid
 training_data/
+/Training_data
+/Unseen_test_data

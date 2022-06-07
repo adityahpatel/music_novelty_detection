@@ -19,7 +19,7 @@ mv * /Users/namita/Desktop/SFL_ProductionGrade/training_data ---> move all files
 find .|grep .mid|mv * .
 
 fish_config prompt list (to list all prompts in fish shell)
-fish_config choose informative
-fish_config choose pythonista
-fish_config choose simple
-fish_config choose scales
+fish_config prompt choose informative
+fish_config prompt choose pythonista
+fish_config prompt choose simple
+fish_config prompt choose scales

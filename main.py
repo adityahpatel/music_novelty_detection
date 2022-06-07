@@ -2,8 +2,6 @@ import pretty_midi, os
 import csv, pretty_midi, re
 import pandas as pd, numpy as np, matplotlib.pyplot as plt
 from sklearn.utils import shuffle
-
-from sklearn.svm import OneClassSVM
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.preprocessing import MinMaxScaler
@@ -204,7 +202,6 @@ def visualize(A: np.array):
 
 
 visualize(X_train)
-
 
 def inference():
     """

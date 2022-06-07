@@ -1,0 +1,15 @@
+data:
+  training: "/Users/namita/Downloads/MusicNet/PS1"
+  testing: "/Users/namita/Downloads/MusicNet/PS2"
+
+folders:
+  training: 'Training_data/'
+  testing: 'Unseen_test_data/'
+
+artifacts:
+  training: 'Artifacts/training_data.pkl'
+  testing: 'Artifacts/Unseen_data.pkl'
+  models: 'Artifacts/models/'
+  Results: "Artifacts/Results/predictions.txt"
+
+
