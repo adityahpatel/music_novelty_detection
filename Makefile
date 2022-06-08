@@ -1,5 +1,5 @@
 all: Artifacts/Results/predictions.txt
-training: Artifacts/models/*
+models: Artifacts/models/*
 data: Artifacts/training_data.pkl
 
 Artifacts/Results/predictions.txt: inference.py Artifacts/models/*
